@@ -23,15 +23,15 @@ class BankFeatureEngineer(BaseEstimator, TransformerMixin):
         X = X.copy()
         yes_no_map = {'no': 0, 'yes': 1}
         
-        # Mapping işlemleri
+        
         for col in ['default', 'housing', 'loan']:
             X[col] = X[col].map(yes_no_map)
             
-        # Yeni özellikler
+        
         X['is_non_negative_balance'] = (X['balance'] >= 0).astype(int)
         X['new_client'] = (X['pdays'] == -1).astype(int)
         
-        # Ay ve Gün Döngüsel Dönüşümü
+        
         month_map = {'jan':1, 'feb':2, 'mar':3, 'apr':4, 'may':5, 'jun':6, 
                      'jul':7, 'aug':8, 'sep':9, 'oct':10, 'nov':11, 'dec':12}
         
@@ -41,21 +41,19 @@ class BankFeatureEngineer(BaseEstimator, TransformerMixin):
         X['day_sin'] = np.sin(2 * np.pi * X['day'] / 31)
         X['day_cos'] = np.cos(2 * np.pi * X['day'] / 31)
         
-        # Nominal sütunları category yap
+        
         cat_cols = ['job', 'marital', 'education', 'contact', 'poutcome']
         for col in cat_cols:
             X[col] = X[col].astype('category')
             
         return X.drop(['month', 'day'], axis=1)
 
-    # set_output için gereken kritik metod
+    
     def get_feature_names_out(self, input_features=None):
         return np.array(self.feature_names_out_)
 
 
-# -------------------------------------------------
-# Model yükleme
-# -------------------------------------------------
+
 @st.cache_resource
 def load_model():
     return joblib.load("model.joblib")
@@ -67,12 +65,10 @@ st.set_page_config(
     layout="centered"
 )
 
-st.title("📞 Bank Telemarketing – HGB Tahmin Arayüzü")
+st.title("📞 Bank Telemarketing")
 st.write("Müşterinin vadeli mevduata **abone olma olasılığını** tahmin eder.")
 
-# -------------------------------------------------
-# Girdi alanları
-# -------------------------------------------------
+
 st.header("👤 Müşteri Bilgileri")
 
 age = st.number_input("Age", min_value=18, max_value=100, value=35)
@@ -118,9 +114,7 @@ poutcome = st.selectbox(
     ["success", "failure", "other", "unknown"]
 )
 
-# -------------------------------------------------
-# Tahmin
-# -------------------------------------------------
+
 if st.button("🔮 Tahmin Et"):
 
     input_df = pd.DataFrame([{
@@ -143,7 +137,7 @@ if st.button("🔮 Tahmin Et"):
 
     prediction = model.predict(input_df)[0]
 
-    # Eğer predict_proba varsa
+    
     if hasattr(model, "predict_proba"):
         probability = model.predict_proba(input_df)[0][1]
         st.metric(
