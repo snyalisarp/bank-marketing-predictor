@@ -91,3 +91,9 @@ streamlit run app.py
 Modelin doğru çalışabilmesi için `BankFeatureEngineer` sınıf tanımının `app.py` içinde yer alması kritik önem taşır. `joblib` nesneyi yüklerken bu sınıfın şablonuna ihtiyaç duyar.
 
 ---
+
+
+## Veri Seti Kaynağı
+
+- Moro, S., Rita, P., & Cortez, P. (2014). Bank Marketing [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5K306.
+- https://archive.ics.uci.edu/dataset/222/bank+marketing
