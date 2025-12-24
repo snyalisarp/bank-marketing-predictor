@@ -106,7 +106,7 @@ month = st.selectbox(
 )
 
 campaign = st.number_input("Number of Contacts (This Campaign)", min_value=1, value=1)
-pdays = st.number_input("Days Since Last Contact (-1 = never)", value=-1)
+pdays = st.number_input("Days Since Last Contact (-1 = never)", min_value=-1, value=-1)
 previous = st.number_input("Previous Contacts", min_value=0, value=0)
 
 poutcome = st.selectbox(
