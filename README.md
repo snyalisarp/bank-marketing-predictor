@@ -28,10 +28,10 @@ Uygulama, geçmiş kampanya verilerinden öğrenilen örüntüleri kullanarak ye
 
 Proje içerisinde yer alan `BankFeatureEngineer` sınıfı şu işlemleri otomatik olarak gerçekleştirir:
 
-1. **Binary Mapping:** 'Yes/No' değerlerini `1/0` formatına dönüştürür.
+1. **Binary Mapping:** 'Evet/Hayır' şeklinde olan sütunların değerlerini `1/0` formatına dönüştürür.
 2. **Feature Creation:** Bakiyenin negatif olup olmaması (`is_non_negative_balance`) ve müşterinin yeni olup olmaması (`new_client`) gibi yeni öznitelikler türetir.
 3. **Cyclical Encoding:** `month` ve `day` sütunlarını periyodik fonksiyonlara (sin/cos) dönüştürerek modelin takvim etkisini anlamasını sağlar.
-4. **Category Dtype:** Kategorik sütunları Gradient Boosting modellerine uygun şekilde optimize eder.
+4. **Category Dtype:** HistGradientBoost algoritmasının kategorik değişkenleri kendiliğinden işleyebilmesinden faydalanılarak nominal veriler `pandas.category` tipine dönüştürülmüştür.
 
 ---
 
@@ -74,7 +74,7 @@ streamlit run app.py
 1. Sol panelden veya ana ekrandan müşterinin **Yaş, Meslek, Eğitim** gibi demografik bilgilerini girin.
 2. **Finansal durum** (Bakiye, Kredi borcu vb.) bilgilerini doldurun.
 3. **"🔮 Tahmin Et"** butonuna basın.
-4. Uygulama size müşterinin abone olma **olasılığını (%)** ve **nihai kararını** (Abone Olur/Olmaz) anında gösterecektir.
+4. Uygulama size müşterinin abone olma **olasılığını (%)** ve **nihai kararını** (Abone Olur/Olmaz) gösterecektir.
 
 ---
 
@@ -88,7 +88,7 @@ streamlit run app.py
 
 ### 💡 Not
 
-Modelin doğru çalışabilmesi için `BankFeatureEngineer` sınıf tanımının `app.py` içinde yer alması kritik önem taşır. `joblib` nesneyi yüklerken bu sınıfın şablonuna ihtiyaç duyar.
+Modelin doğru çalışabilmesi için `BankFeatureEngineer` sınıf tanımının `app.py` içinde yer alması gereklidir. `joblib` modülü nesneyi yüklerken bu sınıfın şablonuna ihtiyaç duyar.
 
 ---
 
